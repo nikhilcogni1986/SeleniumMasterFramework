@@ -17,14 +17,22 @@ public class StorePage extends BasePage
         super(driver);
     }
 
-    public void enterTextInSearchFld(String text)
+    private StorePage enterTextInSearchFld(String text)
     {
         driver.findElement(txtSearchFld).sendKeys(text);
+        return this;
     }
 
-    public void clickSearchBtn()
+    private StorePage clickSearchBtn()
     {
         driver.findElement(btnSearch).click();
+        return this;
+    }
+
+    public StorePage search(String productName)
+    {
+        enterTextInSearchFld(productName).clickSearchBtn();
+        return this;
     }
 
     public String getTitle()
