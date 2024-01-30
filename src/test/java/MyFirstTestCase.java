@@ -1,17 +1,14 @@
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
+import pom.BaseTest;
 
 import java.time.Duration;
 
-public class MyFirstTestCase
+public class MyFirstTestCase extends BaseTest
 {
     @Test
     public void guestCheckoutUsingBankTransfer() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         driver.get("https://askomdch.com");
 
@@ -38,13 +35,10 @@ public class MyFirstTestCase
         driver.findElement(By.id("billing_postcode")).sendKeys("CF233HL");
         driver.findElement(By.id("billing_email")).sendKeys("rakesh@test.com");
         driver.findElement(By.id("place_order")).click();
-        driver.quit();
     }
 
     @Test
     public void loginCheckoutBankTransfer() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         driver.get("https://askomdch.com");
 
@@ -77,7 +71,6 @@ public class MyFirstTestCase
         driver.findElement(By.id("billing_postcode")).sendKeys("CF233HL");
         driver.findElement(By.id("billing_email")).sendKeys("rakesh@test.com");
         driver.findElement(By.id("place_order")).click();
-        driver.quit();
 
     }
 }
