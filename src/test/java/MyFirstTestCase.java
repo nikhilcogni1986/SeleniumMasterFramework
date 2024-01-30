@@ -1,7 +1,7 @@
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
-import pom.BaseTest;
+import pom.base.BaseTest;
 
 import java.time.Duration;
 
