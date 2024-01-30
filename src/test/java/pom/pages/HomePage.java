@@ -10,14 +10,15 @@ public class HomePage extends BasePage
 
     private final By lnkStoreMenu = By.cssSelector("#menu-item-1227  a");
 
-    HomePage(WebDriver driver)
+    public HomePage(WebDriver driver)
     {
         super(driver);
         this.driver = driver;
     }
 
-    public void clickStoreMenuLink()
+    public StorePage clickStoreMenuLink()
     {
         driver.findElement(lnkStoreMenu).click();
+        return new StorePage(driver);
     }
 }

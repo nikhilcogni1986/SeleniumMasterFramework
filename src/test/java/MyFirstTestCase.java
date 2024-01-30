@@ -2,6 +2,8 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pom.base.BaseTest;
+import pom.pages.HomePage;
+import pom.pages.StorePage;
 
 import java.time.Duration;
 
@@ -11,6 +13,13 @@ public class MyFirstTestCase extends BaseTest
     public void guestCheckoutUsingBankTransfer() throws InterruptedException {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         driver.get("https://askomdch.com");
+
+        HomePage homePage = new HomePage(driver);
+        StorePage storePage = homePage.clickStoreMenuLink();
+        storePage.enterTextInSearchFld("Blue");
+        storePage.clickSearchBtn();
+        Assert.assertEquals(storePage.getTitle(),"Search results: “Blue”");
+        storePage.clickAddToCartBtn();
 
         driver.findElement(By.cssSelector("#menu-item-1227  a")).click();
         driver.findElement(By.id("woocommerce-product-search-field-0")).sendKeys("Blue");
