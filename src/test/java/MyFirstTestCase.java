@@ -17,9 +17,9 @@ public class MyFirstTestCase extends BaseTest
         HomePage homePage = new HomePage(driver);
         StorePage storePage = homePage.clickStoreMenuLink();
         storePage.search("Blue");
-        
+
         Assert.assertEquals(storePage.getTitle(),"Search results: “Blue”");
-        storePage.clickAddToCartBtn();
+        storePage.clickAddToCartBtn("Blue Shoes");
 
         driver.findElement(By.cssSelector("#menu-item-1227  a")).click();
         driver.findElement(By.id("woocommerce-product-search-field-0")).sendKeys("Blue");
