@@ -20,14 +20,6 @@ public class MyFirstTestCase extends BaseTest
 
         Assert.assertEquals(storePage.getTitle(),"Search results: “Blue”");
         storePage.clickAddToCartBtn("Blue Shoes");
-
-        driver.findElement(By.cssSelector("#menu-item-1227  a")).click();
-        driver.findElement(By.id("woocommerce-product-search-field-0")).sendKeys("Blue");
-        driver.findElement(By.cssSelector("button[value='Search']")).click();
-        Assert.assertEquals(
-                driver.findElement(By.cssSelector("h1.woocommerce-products-header__title.page-title")).getText(),
-                "Search results: “Blue”");
-        driver.findElement(By.cssSelector("a[aria-label='Add “Blue Shoes” to your cart']")).click();
         Thread.sleep(5000);
         driver.findElement(By.cssSelector("a[title='View cart']")).click();
 
