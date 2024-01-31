@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import pom.base.BaseTest;
+import pom.objects.BillingAddress;
 import pom.pages.CartPage;
 import pom.pages.CheckoutPage;
 import pom.pages.HomePage;
@@ -12,11 +13,17 @@ public class MyFirstTestCase extends BaseTest {
   @Test
   public void guestCheckoutUsingBankTransfer() throws InterruptedException {
 
-      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-      StorePage storePage = new HomePage(driver).
-             load()
-            .navigateToStoreUsingMenu()
-            .search("Blue");
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+    BillingAddress billingAddress = new BillingAddress();
+    billingAddress
+        .setFirstName("Rakesh")
+        .setLastName("Hejjaji")
+        .setAddress1("91 street")
+        .setCity("San Franscisco")
+        .setPostalCode("94138")
+        .setEmailAddress("nikhilrao@test.com");
+
+    StorePage storePage = new HomePage(driver).load().navigateToStoreUsingMenu().search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
 
     storePage.clickAddToCartBtn("Blue Shoes");
@@ -24,27 +31,27 @@ public class MyFirstTestCase extends BaseTest {
     CartPage cartPage = storePage.clickOnViewCart();
 
     Assert.assertEquals(cartPage.getProductName(), "Blue Shoes");
-    CheckoutPage checkoutPage = cartPage.checkout();
-    checkoutPage
-        .enterFirstName("Rakesh")
-        .enterLastName("Hejjaji")
-        .enterAddress1("91 Street")
-        .enterCity("California")
-        .enterPostcode("94188")
-        .enterEmailAddress("nikhilrao@test.com")
-        .placeOrder();
+    CheckoutPage checkoutPage = cartPage.
+             checkout().
+             setBillingAddress(billingAddress).
+             placeOrder();
   }
 
   @Test
   public void loginCheckoutBankTransfer() throws InterruptedException {
 
-      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+    BillingAddress billingAddress = new BillingAddress();
+    billingAddress
+            .setFirstName("Rakesh")
+            .setLastName("Hejjaji")
+            .setAddress1("91 street")
+            .setCity("San Franscisco")
+            .setPostalCode("94138")
+            .setEmailAddress("nikhilrao@test.com");
 
-      StorePage storePage = new HomePage(driver).
-              load()
-              .navigateToStoreUsingMenu()
-              .search("Blue");
-      Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
+    StorePage storePage = new HomePage(driver).load().navigateToStoreUsingMenu().search("Blue");
+    Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
 
     storePage.clickAddToCartBtn("Blue Shoes");
     Thread.sleep(5000);
@@ -54,14 +61,8 @@ public class MyFirstTestCase extends BaseTest {
     CheckoutPage checkoutPage = cartPage.checkout();
     checkoutPage.clickHereLoginLink();
     Thread.sleep(4000);
-    checkoutPage
+    checkoutPage.setBillingAddress(billingAddress)
         .login("nikhilrao@test.com", "password1234")
-        .enterFirstName("Rakesh")
-        .enterLastName("Hejjaji")
-        .enterAddress1("91 Street")
-        .enterCity("California")
-        .enterPostcode("94188")
-        .enterEmailAddress("nikhilrao@test.com")
         .placeOrder();
     Thread.sleep(5000);
     Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");

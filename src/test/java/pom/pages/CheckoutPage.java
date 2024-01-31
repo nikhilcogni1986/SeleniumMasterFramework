@@ -3,6 +3,7 @@ package pom.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pom.base.BasePage;
+import pom.objects.BillingAddress;
 
 public class CheckoutPage extends BasePage {
   private final By txtFirstName = By.id("billing_first_name");
@@ -92,5 +93,15 @@ public class CheckoutPage extends BasePage {
   public CheckoutPage login(String username, String password) {
     enterUsername(username).enterPassword(password).clickLogin();
     return this;
+  }
+
+  public CheckoutPage setBillingAddress(BillingAddress billingAddress)
+  {
+    return enterFirstName(billingAddress.getFirstName()).
+    enterLastName(billingAddress.getLastName()).
+    enterAddress1(billingAddress.getAddress1()).
+    enterCity(billingAddress.getCity()).
+    enterPostcode(billingAddress.getPostalCode()).
+    enterEmailAddress(billingAddress.getEmailAddress());
   }
 }
