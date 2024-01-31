@@ -52,9 +52,9 @@ public class StorePage extends BasePage
         return By.cssSelector("a[aria-label='Add “"+productName+"” to your cart']");
     }
 
-    public StorePage clickOnViewCart()
+    public CartPage clickOnViewCart()
     {
         driver.findElement(btnViewCart).click();
-        return this;
+        return new CartPage(driver);
     }
 }

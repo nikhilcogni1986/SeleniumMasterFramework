@@ -2,6 +2,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pom.base.BaseTest;
+import pom.pages.CartPage;
 import pom.pages.HomePage;
 import pom.pages.StorePage;
 
@@ -16,18 +17,16 @@ public class MyFirstTestCase extends BaseTest
 
         HomePage homePage = new HomePage(driver);
         StorePage storePage = homePage.clickStoreMenuLink();
-        storePage.search("Blue");
 
+        storePage.search("Blue");
         Assert.assertEquals(storePage.getTitle(),"Search results: “Blue”");
+
         storePage.clickAddToCartBtn("Blue Shoes");
         Thread.sleep(5000);
-        driver.findElement(By.cssSelector("a[title='View cart']")).click();
+        CartPage cartPage = storePage.clickOnViewCart();
 
-        Assert.assertEquals(
-                            driver.findElement(By.cssSelector("td[class='product-name'] a")).getText(),
-                      "Blue Shoes"
-                           );
-        driver.findElement(By.cssSelector(".checkout-button.button.alt.wc-forward")).click();
+        Assert.assertEquals(cartPage.getProductName(),"Blue Shoes");
+        cartPage.clickCheckoutBtn();
 
         driver.findElement(By.id("billing_first_name")).sendKeys("Rakesh");
         driver.findElement(By.id("billing_last_name")).sendKeys("Hejaji");
