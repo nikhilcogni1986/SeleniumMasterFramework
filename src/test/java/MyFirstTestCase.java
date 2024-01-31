@@ -11,13 +11,12 @@ import java.time.Duration;
 public class MyFirstTestCase extends BaseTest {
   @Test
   public void guestCheckoutUsingBankTransfer() throws InterruptedException {
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-    driver.get("https://askomdch.com");
 
-    HomePage homePage = new HomePage(driver);
-    StorePage storePage = homePage.navigateToStoreUsingMenu();
-
-    storePage.search("Blue");
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+      StorePage storePage = new HomePage(driver).
+             load()
+            .navigateToStoreUsingMenu()
+            .search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
 
     storePage.clickAddToCartBtn("Blue Shoes");
@@ -38,14 +37,14 @@ public class MyFirstTestCase extends BaseTest {
 
   @Test
   public void loginCheckoutBankTransfer() throws InterruptedException {
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-    driver.get("https://askomdch.com");
 
-    HomePage homePage = new HomePage(driver);
-    StorePage storePage = homePage.navigateToStoreUsingMenu();
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-    storePage.search("Blue");
-    Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
+      StorePage storePage = new HomePage(driver).
+              load()
+              .navigateToStoreUsingMenu()
+              .search("Blue");
+      Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
 
     storePage.clickAddToCartBtn("Blue Shoes");
     Thread.sleep(5000);

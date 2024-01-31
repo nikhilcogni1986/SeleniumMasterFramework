@@ -21,4 +21,10 @@ public class HomePage extends BasePage
         driver.findElement(lnkStoreMenu).click();
         return new StorePage(driver);
     }
+
+    public HomePage load()
+    {
+        load("/");
+        return this;
+    }
 }
