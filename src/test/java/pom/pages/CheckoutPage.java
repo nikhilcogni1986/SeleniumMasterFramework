@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pom.base.BasePage;
 import pom.objects.BillingAddress;
+import pom.objects.User;
 
 public class CheckoutPage extends BasePage {
   private final By txtFirstName = By.id("billing_first_name");
@@ -90,8 +91,8 @@ public class CheckoutPage extends BasePage {
     return new CheckoutPage(driver);
   }
 
-  public CheckoutPage login(String username, String password) {
-    enterUsername(username).enterPassword(password).clickLogin();
+  public CheckoutPage login(User user) {
+    enterUsername(user.getUsername()).enterPassword(user.getPassword()).clickLogin();
     return this;
   }
 
