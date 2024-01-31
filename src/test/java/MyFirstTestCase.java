@@ -1,5 +1,4 @@
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pom.base.BaseTest;
 import pom.pages.CartPage;
@@ -9,69 +8,63 @@ import pom.pages.StorePage;
 
 import java.time.Duration;
 
-public class MyFirstTestCase extends BaseTest
-{
-    @Test
-    public void guestCheckoutUsingBankTransfer() throws InterruptedException {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        driver.get("https://askomdch.com");
+public class MyFirstTestCase extends BaseTest {
+  @Test
+  public void guestCheckoutUsingBankTransfer() throws InterruptedException {
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+    driver.get("https://askomdch.com");
 
-        HomePage homePage = new HomePage(driver);
-        StorePage storePage = homePage.navigateToStoreUsingMenu();
+    HomePage homePage = new HomePage(driver);
+    StorePage storePage = homePage.navigateToStoreUsingMenu();
 
-        storePage.search("Blue");
-        Assert.assertEquals(storePage.getTitle(),"Search results: “Blue”");
+    storePage.search("Blue");
+    Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
 
-        storePage.clickAddToCartBtn("Blue Shoes");
-        Thread.sleep(5000);
-        CartPage cartPage = storePage.clickOnViewCart();
+    storePage.clickAddToCartBtn("Blue Shoes");
+    Thread.sleep(5000);
+    CartPage cartPage = storePage.clickOnViewCart();
 
-        Assert.assertEquals(cartPage.getProductName(),"Blue Shoes");
-        CheckoutPage checkoutPage = cartPage.checkout();
-        checkoutPage.
-                     enterFirstName("Rakesh")
-                    .enterLastName("Hejjaji")
-                    .enterAddress1("91 Street")
-                    .enterCity("California")
-                    .enterPostcode("94188")
-                    .enterEmailAddress("nikhilrao@test.com")
-                    .placeOrder();
-    }
+    Assert.assertEquals(cartPage.getProductName(), "Blue Shoes");
+    CheckoutPage checkoutPage = cartPage.checkout();
+    checkoutPage
+        .enterFirstName("Rakesh")
+        .enterLastName("Hejjaji")
+        .enterAddress1("91 Street")
+        .enterCity("California")
+        .enterPostcode("94188")
+        .enterEmailAddress("nikhilrao@test.com")
+        .placeOrder();
+  }
 
-    @Test
-    public void loginCheckoutBankTransfer() throws InterruptedException {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        driver.get("https://askomdch.com");
+  @Test
+  public void loginCheckoutBankTransfer() throws InterruptedException {
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+    driver.get("https://askomdch.com");
 
-        driver.findElement(By.cssSelector("#menu-item-1227  a")).click();
-        driver.findElement(By.id("woocommerce-product-search-field-0")).sendKeys("Blue");
-        driver.findElement(By.cssSelector("button[value='Search']")).click();
-        Assert.assertEquals(
-                driver.findElement(By.cssSelector("h1.woocommerce-products-header__title.page-title")).getText(),
-                "Search results: “Blue”");
-        driver.findElement(By.cssSelector("a[aria-label='Add “Blue Shoes” to your cart']")).click();
-        Thread.sleep(5000);
-        driver.findElement(By.cssSelector("a[title='View cart']")).click();
+    HomePage homePage = new HomePage(driver);
+    StorePage storePage = homePage.navigateToStoreUsingMenu();
 
-        Assert.assertEquals(
-                driver.findElement(By.cssSelector("td[class='product-name'] a")).getText(),
-                "Blue Shoes"
-        );
-        driver.findElement(By.cssSelector(".checkout-button.button.alt.wc-forward")).click();
+    storePage.search("Blue");
+    Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
 
-        driver.findElement(By.cssSelector(".showlogin")).click();
-        Thread.sleep(4000);
-        driver.findElement(By.id("username")).sendKeys("nikhiltest@test.com");
-        driver.findElement(By.id("password")).sendKeys("password");
-        driver.findElement(By.cssSelector("button[value='Login']")).click();
+    storePage.clickAddToCartBtn("Blue Shoes");
+    Thread.sleep(5000);
+    CartPage cartPage = storePage.clickOnViewCart();
 
-        driver.findElement(By.id("billing_first_name")).sendKeys("Rakesh");
-        driver.findElement(By.id("billing_last_name")).sendKeys("Hejaji");
-        driver.findElement(By.id("billing_address_1")).sendKeys("ADDr1");
-        driver.findElement(By.id("billing_city")).sendKeys("California");
-        driver.findElement(By.id("billing_postcode")).sendKeys("CF233HL");
-        driver.findElement(By.id("billing_email")).sendKeys("rakesh@test.com");
-        driver.findElement(By.id("place_order")).click();
-
-    }
+    Assert.assertEquals(cartPage.getProductName(), "Blue Shoes");
+    CheckoutPage checkoutPage = cartPage.checkout();
+    checkoutPage.clickHereLoginLink();
+    Thread.sleep(4000);
+    checkoutPage
+        .login("nikhilrao@test.com", "password1234")
+        .enterFirstName("Rakesh")
+        .enterLastName("Hejjaji")
+        .enterAddress1("91 Street")
+        .enterCity("California")
+        .enterPostcode("94188")
+        .enterEmailAddress("nikhilrao@test.com")
+        .placeOrder();
+    Thread.sleep(5000);
+    Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
+  }
 }
