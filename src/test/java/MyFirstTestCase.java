@@ -2,6 +2,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pom.base.BaseTest;
 import pom.objects.BillingAddress;
+import pom.objects.Product;
 import pom.pages.CartPage;
 import pom.pages.CheckoutPage;
 import pom.pages.HomePage;
@@ -9,7 +10,6 @@ import pom.pages.StorePage;
 import pom.utils.JacksonDataBind;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.Duration;
 
 public class MyFirstTestCase extends BaseTest {
@@ -19,15 +19,16 @@ public class MyFirstTestCase extends BaseTest {
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
     BillingAddress billingAddress = JacksonDataBind.deserializeJSON("myBillingAddress.json", BillingAddress.class);
+    Product product = new Product(1215);
 
     StorePage storePage = new HomePage(driver).load().navigateToStoreUsingMenu().search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
 
-    storePage.clickAddToCartBtn("Blue Shoes");
+    storePage.clickAddToCartBtn(product.getProductName());
     Thread.sleep(5000);
     CartPage cartPage = storePage.clickOnViewCart();
 
-    Assert.assertEquals(cartPage.getProductName(), "Blue Shoes");
+    Assert.assertEquals(cartPage.getProductName(), product.getProductName());
     CheckoutPage checkoutPage = cartPage.
              checkout().
              setBillingAddress(billingAddress).
@@ -35,10 +36,11 @@ public class MyFirstTestCase extends BaseTest {
   }
 
   @Test
-  public void loginCheckoutBankTransfer() throws InterruptedException {
+  public void loginCheckoutBankTransfer() throws InterruptedException, IOException {
 
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     BillingAddress billingAddress = new BillingAddress();
+    Product product = new Product(1215);
     billingAddress
             .setFirstName("Rakesh")
             .setLastName("Hejjaji")
@@ -50,11 +52,11 @@ public class MyFirstTestCase extends BaseTest {
     StorePage storePage = new HomePage(driver).load().navigateToStoreUsingMenu().search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
 
-    storePage.clickAddToCartBtn("Blue Shoes");
+    storePage.clickAddToCartBtn(product.getProductName());
     Thread.sleep(5000);
     CartPage cartPage = storePage.clickOnViewCart();
 
-    Assert.assertEquals(cartPage.getProductName(), "Blue Shoes");
+    Assert.assertEquals(cartPage.getProductName(), product.getProductName());
     CheckoutPage checkoutPage = cartPage.checkout();
     checkoutPage.clickHereLoginLink();
     Thread.sleep(4000);
