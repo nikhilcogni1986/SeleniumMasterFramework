@@ -15,6 +15,7 @@ public class StorePage extends BasePage
 
     public StorePage(WebDriver driver) {
         super(driver);
+        this.driver = driver;
     }
 
     private StorePage enterTextInSearchFld(String text)

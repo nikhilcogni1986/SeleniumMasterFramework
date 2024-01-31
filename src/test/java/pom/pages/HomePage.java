@@ -16,7 +16,7 @@ public class HomePage extends BasePage
         this.driver = driver;
     }
 
-    public StorePage clickStoreMenuLink()
+    public StorePage navigateToStoreUsingMenu()
     {
         driver.findElement(lnkStoreMenu).click();
         return new StorePage(driver);

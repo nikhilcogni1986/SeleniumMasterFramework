@@ -3,6 +3,7 @@ import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pom.base.BaseTest;
 import pom.pages.CartPage;
+import pom.pages.CheckoutPage;
 import pom.pages.HomePage;
 import pom.pages.StorePage;
 
@@ -16,7 +17,7 @@ public class MyFirstTestCase extends BaseTest
         driver.get("https://askomdch.com");
 
         HomePage homePage = new HomePage(driver);
-        StorePage storePage = homePage.clickStoreMenuLink();
+        StorePage storePage = homePage.navigateToStoreUsingMenu();
 
         storePage.search("Blue");
         Assert.assertEquals(storePage.getTitle(),"Search results: “Blue”");
@@ -26,15 +27,15 @@ public class MyFirstTestCase extends BaseTest
         CartPage cartPage = storePage.clickOnViewCart();
 
         Assert.assertEquals(cartPage.getProductName(),"Blue Shoes");
-        cartPage.clickCheckoutBtn();
-
-        driver.findElement(By.id("billing_first_name")).sendKeys("Rakesh");
-        driver.findElement(By.id("billing_last_name")).sendKeys("Hejaji");
-        driver.findElement(By.id("billing_address_1")).sendKeys("ADDr1");
-        driver.findElement(By.id("billing_city")).sendKeys("California");
-        driver.findElement(By.id("billing_postcode")).sendKeys("CF233HL");
-        driver.findElement(By.id("billing_email")).sendKeys("rakesh@test.com");
-        driver.findElement(By.id("place_order")).click();
+        CheckoutPage checkoutPage = cartPage.checkout();
+        checkoutPage.
+                     enterFirstName("Rakesh")
+                    .enterLastName("Hejjaji")
+                    .enterAddress1("91 Street")
+                    .enterCity("California")
+                    .enterPostcode("94188")
+                    .enterEmailAddress("nikhilrao@test.com")
+                    .placeOrder();
     }
 
     @Test
