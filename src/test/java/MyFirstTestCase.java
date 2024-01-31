@@ -1,4 +1,4 @@
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pom.base.BaseTest;
 import pom.objects.BillingAddress;
@@ -6,22 +6,20 @@ import pom.pages.CartPage;
 import pom.pages.CheckoutPage;
 import pom.pages.HomePage;
 import pom.pages.StorePage;
+import pom.utils.JacksonDataBind;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
 
 public class MyFirstTestCase extends BaseTest {
   @Test
-  public void guestCheckoutUsingBankTransfer() throws InterruptedException {
+  public void guestCheckoutUsingBankTransfer() throws InterruptedException, IOException {
 
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     BillingAddress billingAddress = new BillingAddress();
-    billingAddress
-        .setFirstName("Rakesh")
-        .setLastName("Hejjaji")
-        .setAddress1("91 street")
-        .setCity("San Franscisco")
-        .setPostalCode("94138")
-        .setEmailAddress("nikhilrao@test.com");
+    InputStream is = getClass().getClassLoader().getResourceAsStream("myBillingAddress.json");
+    billingAddress = JacksonDataBind.deserializeJSON(is, billingAddress);
 
     StorePage storePage = new HomePage(driver).load().navigateToStoreUsingMenu().search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
