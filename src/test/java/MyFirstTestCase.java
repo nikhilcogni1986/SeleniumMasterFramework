@@ -17,9 +17,8 @@ public class MyFirstTestCase extends BaseTest {
   public void guestCheckoutUsingBankTransfer() throws InterruptedException, IOException {
 
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-    BillingAddress billingAddress = new BillingAddress();
-    InputStream is = getClass().getClassLoader().getResourceAsStream("myBillingAddress.json");
-    billingAddress = JacksonDataBind.deserializeJSON(is, billingAddress);
+
+    BillingAddress billingAddress = JacksonDataBind.deserializeJSON("myBillingAddress.json", BillingAddress.class);
 
     StorePage storePage = new HomePage(driver).load().navigateToStoreUsingMenu().search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");

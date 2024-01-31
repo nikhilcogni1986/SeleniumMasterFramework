@@ -9,8 +9,9 @@ import java.io.InputStream;
 
 public class JacksonDataBind
 {
-    public static BillingAddress deserializeJSON(InputStream is, BillingAddress billingAddress) throws IOException {
+    public static <T> T deserializeJSON(String fileName, Class <T> T) throws IOException {
+        InputStream is = JacksonDataBind.class.getClassLoader().getResourceAsStream(fileName);
         ObjectMapper objectMapper = new ObjectMapper();
-        return  objectMapper.readValue(is, billingAddress.getClass());
+        return  objectMapper.readValue(is, T);
     }
 }
