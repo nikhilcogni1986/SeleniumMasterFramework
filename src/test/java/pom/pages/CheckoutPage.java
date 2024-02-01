@@ -2,15 +2,10 @@ package pom.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import pom.base.BasePage;
 import pom.objects.BillingAddress;
 import pom.objects.User;
-
-import java.time.Duration;
-import java.util.List;
 
 public class CheckoutPage extends BasePage {
   private final By txtFirstName = By.id("billing_first_name");
@@ -36,42 +31,43 @@ public class CheckoutPage extends BasePage {
   }
 
   public CheckoutPage enterFirstName(String firstName) {
-    driver.findElement(txtFirstName).clear();
-    driver.findElement(txtFirstName).sendKeys(firstName);
+    wait.until(ExpectedConditions.elementToBeClickable(txtFirstName)).clear();
+    wait.until(ExpectedConditions.elementToBeClickable(txtFirstName)).sendKeys(firstName);
     return this;
   }
 
   public CheckoutPage enterLastName(String lastName)
   {
-    driver.findElement(txtLastName).clear();
-    driver.findElement(txtLastName).sendKeys(lastName);
+    wait.until(ExpectedConditions.elementToBeClickable(txtLastName)).clear();
+    wait.until(ExpectedConditions.elementToBeClickable(txtLastName)).sendKeys(lastName);
     return this;
   }
 
   public CheckoutPage enterAddress1(String address1)
   {
-    driver.findElement(txtAddress1).clear();
-    driver.findElement(txtAddress1).sendKeys(address1);
+    wait.until(ExpectedConditions.elementToBeClickable(txtAddress1)).clear();
+    wait.until(ExpectedConditions.elementToBeClickable(txtAddress1)).sendKeys(address1);
     return this;
   }
 
   public CheckoutPage enterCity(String city)
   {
-    driver.findElement(txtCity).clear();
-    driver.findElement(txtCity).sendKeys(city);
+    wait.until(ExpectedConditions.elementToBeClickable(txtCity)).clear();
+    wait.until(ExpectedConditions.elementToBeClickable(txtCity)).sendKeys(city);
     return this;
   }
 
   public CheckoutPage enterPostcode(String postcode)
   {
-    driver.findElement(txtPostcode).clear();
-    driver.findElement(txtPostcode).sendKeys(postcode);
+    wait.until(ExpectedConditions.elementToBeClickable(txtPostcode)).clear();
+    wait.until(ExpectedConditions.elementToBeClickable(txtPostcode)).sendKeys(postcode);
     return this;
   }
 
-  public CheckoutPage enterEmailAddress(String emailAddress) {
-    driver.findElement(txtEmail).clear();
-    driver.findElement(txtEmail).sendKeys(emailAddress);
+  public CheckoutPage enterEmailAddress(String emailAddress)
+  {
+    wait.until(ExpectedConditions.elementToBeClickable(txtEmail)).clear();
+    wait.until(ExpectedConditions.elementToBeClickable(txtEmail)).sendKeys(emailAddress);
     return this;
   }
 
@@ -81,29 +77,32 @@ public class CheckoutPage extends BasePage {
     return this;
   }
 
-  public CheckoutPage enterUsername(String username) {
-    driver.findElement(txtUsername).clear();
-    driver.findElement(txtUsername).sendKeys(username);
+  public CheckoutPage enterUsername(String username)
+  {
+    wait.until(ExpectedConditions.elementToBeClickable(txtUsername)).clear();
+    wait.until(ExpectedConditions.elementToBeClickable(txtUsername)).sendKeys(username);
     return this;
   }
 
-  public CheckoutPage enterPassword(String password) {
-    driver.findElement(txtPassword).clear();
-    driver.findElement(txtPassword).sendKeys(password);
+  public CheckoutPage enterPassword(String password)
+  {
+    wait.until(ExpectedConditions.elementToBeClickable(txtPassword)).clear();
+    wait.until(ExpectedConditions.elementToBeClickable(txtPassword)).sendKeys(password);
     return this;
   }
 
   public String getNotice() {
-    return driver.findElement(successNotice).getText();
+    return wait.until(ExpectedConditions.visibilityOfElementLocated(successNotice)).getText();
   }
 
-  public CheckoutPage clickLogin() {
-    driver.findElement(btnLogin).click();
+  public CheckoutPage clickLogin()
+  {
+    wait.until(ExpectedConditions.elementToBeClickable(btnLogin)).click();
     return new CheckoutPage(driver);
   }
 
   public CheckoutPage clickHereLoginLink() {
-    driver.findElement(lnkLogin).click();
+    wait.until(ExpectedConditions.elementToBeClickable(lnkLogin)).click();
     return new CheckoutPage(driver);
   }
 
