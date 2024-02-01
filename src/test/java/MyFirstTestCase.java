@@ -11,15 +11,12 @@ import pom.pages.StorePage;
 import pom.utils.JacksonDataBind;
 
 import java.io.IOException;
-import java.time.Duration;
 
 public class MyFirstTestCase extends BaseTest {
   @Test
   public void guestCheckoutUsingBankTransfer() throws InterruptedException, IOException {
 
     String searchFor = "Blue";
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-
     BillingAddress billingAddress = JacksonDataBind.deserializeJSON("myBillingAddress.json", BillingAddress.class);
     Product product = new Product(1215);
 
@@ -27,7 +24,6 @@ public class MyFirstTestCase extends BaseTest {
     Assert.assertEquals(storePage.getTitle(), "Search results: “"+searchFor+"”");
 
     storePage.clickAddToCartBtn(product.getProductName());
-    Thread.sleep(5000);
     CartPage cartPage = storePage.clickOnViewCart();
 
     Assert.assertEquals(cartPage.getProductName(), product.getProductName());
@@ -41,34 +37,23 @@ public class MyFirstTestCase extends BaseTest {
   public void loginCheckoutBankTransfer() throws InterruptedException, IOException {
 
     String searchFor = "Blue";
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-    BillingAddress billingAddress = new BillingAddress();
+    BillingAddress billingAddress = JacksonDataBind.deserializeJSON("myBillingAddress.json", BillingAddress.class);
     Product product = new Product(1215);
     User user = new User("nikhilrao@test.com","password1234");
-
-    billingAddress
-            .setFirstName("Rakesh")
-            .setLastName("Hejjaji")
-            .setAddress1("91 street")
-            .setCity("San Franscisco")
-            .setPostalCode("94138")
-            .setEmailAddress("nikhilrao@test.com");
 
     StorePage storePage = new HomePage(driver).load().navigateToStoreUsingMenu().search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “"+searchFor+"”");
 
     storePage.clickAddToCartBtn(product.getProductName());
-    Thread.sleep(5000);
     CartPage cartPage = storePage.clickOnViewCart();
 
     Assert.assertEquals(cartPage.getProductName(), product.getProductName());
     CheckoutPage checkoutPage = cartPage.checkout();
     checkoutPage.clickHereLoginLink();
-    Thread.sleep(4000);
-    checkoutPage.setBillingAddress(billingAddress)
+    checkoutPage
         .login(user)
+        .setBillingAddress(billingAddress)
         .placeOrder();
-    Thread.sleep(5000);
     Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
   }
 }
