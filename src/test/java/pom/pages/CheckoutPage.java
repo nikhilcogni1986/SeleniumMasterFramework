@@ -41,22 +41,30 @@ public class CheckoutPage extends BasePage {
     return this;
   }
 
-  public CheckoutPage enterLastName(String lastName) {
+  public CheckoutPage enterLastName(String lastName)
+  {
+    driver.findElement(txtLastName).clear();
     driver.findElement(txtLastName).sendKeys(lastName);
     return this;
   }
 
-  public CheckoutPage enterAddress1(String address1) {
+  public CheckoutPage enterAddress1(String address1)
+  {
+    driver.findElement(txtAddress1).clear();
     driver.findElement(txtAddress1).sendKeys(address1);
     return this;
   }
 
-  public CheckoutPage enterCity(String city) {
+  public CheckoutPage enterCity(String city)
+  {
+    driver.findElement(txtCity).clear();
     driver.findElement(txtCity).sendKeys(city);
     return this;
   }
 
-  public CheckoutPage enterPostcode(String postcode) {
+  public CheckoutPage enterPostcode(String postcode)
+  {
+    driver.findElement(txtPostcode).clear();
     driver.findElement(txtPostcode).sendKeys(postcode);
     return this;
   }
@@ -68,14 +76,7 @@ public class CheckoutPage extends BasePage {
   }
 
   public CheckoutPage placeOrder() {
-    List<WebElement> overlays = driver.findElements(overlay);
-    System.out.println("Overlays with size: "+overlays.size());
-    if(overlays.size() > 0)
-    {
-      new WebDriverWait(driver, Duration.ofSeconds(15)).until(
-              ExpectedConditions.invisibilityOfAllElements(overlays));
-    }
-    System.out.println("Overlays are not invisible");
+    waitForOverlays(overlay);
     driver.findElement(btnPlaceOrder).click();
     return this;
   }
