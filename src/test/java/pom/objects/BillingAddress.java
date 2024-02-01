@@ -4,8 +4,10 @@ public class BillingAddress
 {
     private String firstName;
     private String lastName;
+    private String country;
     private String address1;
     private String city;
+    private String state;
     private String postalCode;
     private String emailAddress;
 
@@ -27,6 +29,14 @@ public class BillingAddress
         return this;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public String getAddress1() {
         return address1;
     }
@@ -43,6 +53,14 @@ public class BillingAddress
     public BillingAddress setCity(String city) {
         this.city = city;
         return this;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getPostalCode() {

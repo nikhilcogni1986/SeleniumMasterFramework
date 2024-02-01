@@ -1,8 +1,10 @@
 {
   "firstName": "Dan",
   "lastName": "Edwards",
+  "country": "India",
   "address1": "91 street",
-  "city": "San Francisco",
-  "postalCode": "94138",
+  "city": "Bangalore",
+  "state": "Karnataka",
+  "postalCode": "560016",
   "emailAddress": "nikhilrao@test.com"
 }

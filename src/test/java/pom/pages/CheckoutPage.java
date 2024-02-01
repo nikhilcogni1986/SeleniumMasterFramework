@@ -3,6 +3,7 @@ package pom.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import pom.base.BasePage;
 import pom.objects.BillingAddress;
 import pom.objects.User;
@@ -22,6 +23,8 @@ public class CheckoutPage extends BasePage {
   private final By successNotice =
       By.cssSelector(".woocommerce-notice.woocommerce-notice--success");
   private final By overlay = By.cssSelector(".blockUI.blockOverlay");
+  private final By drpDwnCountry = By.id("billing_country");
+  private final By drpDwnState = By.id("billing_state");
 
   protected WebDriver driver;
 
@@ -43,6 +46,13 @@ public class CheckoutPage extends BasePage {
     return this;
   }
 
+  public CheckoutPage selectCountry(String country)
+  {
+    Select select = new Select(driver.findElement(drpDwnCountry));
+    select.selectByVisibleText(country);
+    return this;
+  }
+
   public CheckoutPage enterAddress1(String address1)
   {
     wait.until(ExpectedConditions.elementToBeClickable(txtAddress1)).clear();
@@ -54,6 +64,13 @@ public class CheckoutPage extends BasePage {
   {
     wait.until(ExpectedConditions.elementToBeClickable(txtCity)).clear();
     wait.until(ExpectedConditions.elementToBeClickable(txtCity)).sendKeys(city);
+    return this;
+  }
+
+  public CheckoutPage selectState(String state)
+  {
+    Select select = new Select(driver.findElement(drpDwnState));
+    select.selectByVisibleText(state);
     return this;
   }
 
@@ -117,8 +134,10 @@ public class CheckoutPage extends BasePage {
   {
     return enterFirstName(billingAddress.getFirstName()).
     enterLastName(billingAddress.getLastName()).
+    selectCountry(billingAddress.getCountry()).
     enterAddress1(billingAddress.getAddress1()).
     enterCity(billingAddress.getCity()).
+    selectState(billingAddress.getState()).
     enterPostcode(billingAddress.getPostalCode()).
     enterEmailAddress(billingAddress.getEmailAddress());
   }
