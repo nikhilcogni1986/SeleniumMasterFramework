@@ -1,0 +1,4 @@
+mvn clean test
+mvn clean test -Dbrowser=<BrowserName>
+mvn clean test -Dsurefire.suiteXmlFiles=testng.xml,testng_ff.xml
+mvn clean test -Dsuitefile=testng.xml

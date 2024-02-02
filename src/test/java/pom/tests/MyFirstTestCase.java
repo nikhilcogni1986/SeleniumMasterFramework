@@ -22,7 +22,7 @@ public class MyFirstTestCase extends BaseTest {
     BillingAddress billingAddress = JacksonDataBind.deserializeJSON("myBillingAddress.json", BillingAddress.class);
     Product product = new Product(1215);
 
-    StorePage storePage = new HomePage(driver).load().navigateToStoreUsingMenu().search(searchFor);
+    StorePage storePage = new HomePage(getDriver()).load().navigateToStoreUsingMenu().search(searchFor);
     Assert.assertEquals(storePage.getTitle(), "Search results: “"+searchFor+"”");
 
     storePage.clickAddToCartBtn(product.getProductName());
@@ -43,7 +43,7 @@ public class MyFirstTestCase extends BaseTest {
     Product product = new Product(1215);
     User user = new User("nikhilrao@test.com","password1234");
 
-    StorePage storePage = new HomePage(driver).load().navigateToStoreUsingMenu().search("Blue");
+    StorePage storePage = new HomePage(getDriver()).load().navigateToStoreUsingMenu().search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “"+searchFor+"”");
 
     storePage.clickAddToCartBtn(product.getProductName());

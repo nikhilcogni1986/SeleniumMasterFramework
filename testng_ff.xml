@@ -2,7 +2,7 @@
 
 <suite name="Suite1" verbose="1" >
     <test name="Retail Regression Test">
-        <parameter name="browser" value="CHROME"/>
+        <parameter name="browser" value="FIREFOX"/>
         <classes>
             <class name="pom.tests.MyFirstTestCase"/>
         </classes>
