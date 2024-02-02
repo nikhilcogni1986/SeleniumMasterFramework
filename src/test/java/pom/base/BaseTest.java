@@ -12,8 +12,7 @@ public class BaseTest
     @BeforeMethod
     public void startDriver()
     {
-        String browserName = System.getProperty("browser");
-        driver = new DriverManager().initializeDriver(browserName);
+        driver = new DriverManager().initializeDriver();
     }
 
     @AfterMethod
