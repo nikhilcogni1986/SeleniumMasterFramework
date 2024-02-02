@@ -1,7 +1,9 @@
 package pom.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import pom.base.BasePage;
@@ -25,6 +27,8 @@ public class CheckoutPage extends BasePage {
   private final By overlay = By.cssSelector(".blockUI.blockOverlay");
   private final By drpDwnCountry = By.id("billing_country");
   private final By drpDwnState = By.id("billing_state");
+  private final By altDrpDwnCountry = By.id("select2-billing_country-container");
+  private final By altDrpDwnState = By.id("select2-billing_state-container");
 
   protected WebDriver driver;
 
@@ -48,8 +52,13 @@ public class CheckoutPage extends BasePage {
 
   public CheckoutPage selectCountry(String country)
   {
-    Select select = new Select(driver.findElement(drpDwnCountry));
-    select.selectByVisibleText(country);
+//    Select select = new Select(driver.findElement(drpDwnCountry));
+//    select.selectByVisibleText(country);
+
+    wait.until(ExpectedConditions.elementToBeClickable(altDrpDwnCountry)).click();
+    WebElement countryOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='"+country+"']")));
+    ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);",countryOption);
+    countryOption.click();
     return this;
   }
 
@@ -69,8 +78,13 @@ public class CheckoutPage extends BasePage {
 
   public CheckoutPage selectState(String state)
   {
-    Select select = new Select(driver.findElement(drpDwnState));
-    select.selectByVisibleText(state);
+//    Select select = new Select(driver.findElement(drpDwnState));
+//    select.selectByVisibleText(state);
+
+    wait.until(ExpectedConditions.elementToBeClickable(altDrpDwnState)).click();
+    WebElement stateOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='"+state+"']")));
+    ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);",stateOption);
+    stateOption.click();
     return this;
   }
 
