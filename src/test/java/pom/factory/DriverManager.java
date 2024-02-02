@@ -8,9 +8,9 @@ import pom.constants.BrowserType;
 public class DriverManager
 {
     public WebDriver driver;
-    public WebDriver initializeDriver()
+    public WebDriver initializeDriver(String browser)
     {
-        String browserName = System.getProperty("browser");
+        String browserName = System.getProperty("browser",browser);
         switch (BrowserType.valueOf(browserName))
         {
             case CHROME:

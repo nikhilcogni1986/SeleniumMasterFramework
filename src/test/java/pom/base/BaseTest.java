@@ -1,5 +1,6 @@
 package pom.base;
 
+import org.testng.annotations.Parameters;
 import pom.factory.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -9,10 +10,11 @@ public class BaseTest
 {
     protected WebDriver driver;
 
+    @Parameters("browser")
     @BeforeMethod
-    public void startDriver()
+    public void startDriver(String browser)
     {
-        driver = new DriverManager().initializeDriver();
+        driver = new DriverManager().initializeDriver(browser);
     }
 
     @AfterMethod

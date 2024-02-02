@@ -1,3 +1,5 @@
+package pom.tests;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pom.base.BaseTest;
