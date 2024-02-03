@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class MyDataProvider
 {
-    @DataProvider(name = "getFeaturedProducts",parallel = true)
+    @DataProvider(name = "getFeaturedProducts",parallel = false)
     protected Object[] getFeaturedProducts() throws IOException {
         return JacksonDataBind.deserializeJSON("products.json", Product[].class);
     }

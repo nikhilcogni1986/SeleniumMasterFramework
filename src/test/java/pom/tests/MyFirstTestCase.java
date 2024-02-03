@@ -1,7 +1,6 @@
 package pom.tests;
 
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pom.DataProviders.MyDataProvider;
 import pom.base.BaseTest;
@@ -19,17 +18,20 @@ import java.io.IOException;
 
 public class MyFirstTestCase extends BaseTest {
   @Test
-  public void guestCheckoutUsingBankTransfer() throws InterruptedException, IOException {
+  public void guestCheckoutUsingBankTransfer() throws IOException {
 
     String searchFor = "Blue";
     BillingAddress billingAddress = JacksonDataBind.deserializeJSON("myBillingAddress.json", BillingAddress.class);
     Product product = new Product(1215);
 
-    StorePage storePage = new HomePage(getDriver()).load().navigateToStoreUsingMenu().search(searchFor);
+    StorePage storePage = new HomePage(getDriver()).load().
+            getHeader().
+            navigateToStoreUsingMenu().search(searchFor);
     Assert.assertEquals(storePage.getTitle(), "Search results: “"+searchFor+"”");
 
-    storePage.clickAddToCartBtn(product.getProductName());
-    CartPage cartPage = storePage.clickOnViewCart();
+    CartPage cartPage = storePage.getThumbnails().
+            clickAddToCartBtn(product.getProductName())
+            .clickOnViewCart();
 
     Assert.assertEquals(cartPage.getProductName(), product.getProductName());
     CheckoutPage checkoutPage = cartPage.
@@ -39,18 +41,18 @@ public class MyFirstTestCase extends BaseTest {
   }
 
   @Test
-  public void loginCheckoutBankTransfer() throws InterruptedException, IOException {
+  public void loginCheckoutBankTransfer() throws IOException {
 
     String searchFor = "Blue";
     BillingAddress billingAddress = JacksonDataBind.deserializeJSON("myBillingAddress.json", BillingAddress.class);
     Product product = new Product(1215);
     User user = new User(ConfigLoader.getInstance().getUsername(),ConfigLoader.getInstance().getPassword());
 
-    StorePage storePage = new HomePage(getDriver()).load().navigateToStoreUsingMenu().search("Blue");
+    StorePage storePage = new HomePage(getDriver()).load().getHeader().navigateToStoreUsingMenu().search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “"+searchFor+"”");
 
-    storePage.clickAddToCartBtn(product.getProductName());
-    CartPage cartPage = storePage.clickOnViewCart();
+    storePage.getThumbnails().clickAddToCartBtn(product.getProductName());
+    CartPage cartPage = storePage.getThumbnails().clickOnViewCart();
 
     Assert.assertEquals(cartPage.getProductName(), product.getProductName());
     CheckoutPage checkoutPage = cartPage.checkout();
@@ -66,6 +68,7 @@ public class MyFirstTestCase extends BaseTest {
   public void addToCartFeaturedProducts(Product product) throws IOException {
     CartPage cartPage = new HomePage(getDriver()).
             load().
+            getThumbnails().
             clickAddToCartBtn(product.getProductName()).
             clickOnViewCart();
     Assert.assertEquals(cartPage.getProductName(), product.getProductName());

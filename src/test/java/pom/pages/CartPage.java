@@ -7,15 +7,12 @@ import pom.base.BasePage;
 
 public class CartPage extends BasePage
 {
-    protected WebDriver driver;
-
     private final By productName = By.cssSelector("td[class='product-name'] a");
     private final By btnCheckout = By.cssSelector(".checkout-button.button.alt.wc-forward");
 
     public CartPage(WebDriver driver)
     {
         super(driver);
-        this.driver = driver;
     }
 
     public String getProductName()
