@@ -70,7 +70,7 @@ public class MyFirstTestCase extends BaseTest {
     Assert.assertEquals(cartPage.getProductName(), product.getProductName());
   }
 
-  @DataProvider(name = "getFeaturedProducts")
+  @DataProvider(name = "getFeaturedProducts",parallel = true)
   protected Object[] getFeaturedProducts() throws IOException {
     return JacksonDataBind.deserializeJSON("products.json", Product[].class);
   }
