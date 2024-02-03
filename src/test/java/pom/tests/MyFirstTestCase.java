@@ -10,6 +10,7 @@ import pom.pages.CartPage;
 import pom.pages.CheckoutPage;
 import pom.pages.HomePage;
 import pom.pages.StorePage;
+import pom.utils.ConfigLoader;
 import pom.utils.JacksonDataBind;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class MyFirstTestCase extends BaseTest {
     String searchFor = "Blue";
     BillingAddress billingAddress = JacksonDataBind.deserializeJSON("myBillingAddress.json", BillingAddress.class);
     Product product = new Product(1215);
-    User user = new User("nikhilrao@test.com","password1234");
+    User user = new User(ConfigLoader.getInstance().getUsername(),ConfigLoader.getInstance().getPassword());
 
     StorePage storePage = new HomePage(getDriver()).load().navigateToStoreUsingMenu().search("Blue");
     Assert.assertEquals(storePage.getTitle(), "Search results: “"+searchFor+"”");

@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pom.base.BasePage;
 
+import java.io.IOException;
+
 public class HomePage extends BasePage
 {
     protected WebDriver driver;
@@ -23,8 +25,7 @@ public class HomePage extends BasePage
         return new StorePage(driver);
     }
 
-    public HomePage load()
-    {
+    public HomePage load() throws IOException {
         load("/");
         return this;
     }

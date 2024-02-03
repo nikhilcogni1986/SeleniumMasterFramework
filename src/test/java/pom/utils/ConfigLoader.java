@@ -5,14 +5,14 @@ import java.util.Properties;
 
 public class ConfigLoader
 {
-    private Properties properties;
-    private ConfigLoader configloader;
+    private final Properties properties;
+    private static ConfigLoader configloader;
 
     private ConfigLoader() throws IOException {
-        PropertyUtils.propertyLoader("src/test/Resources/Config.properties");
+        properties = PropertyUtils.propertyLoader("src/test/Resources/Config.properties");
     }
 
-    public ConfigLoader getInstance() throws IOException {
+    public static ConfigLoader getInstance() throws IOException {
         if(configloader == null)
         {
             configloader = new ConfigLoader();
