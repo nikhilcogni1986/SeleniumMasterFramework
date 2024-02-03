@@ -1,6 +1,7 @@
 package pom.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pom.base.BaseTest;
 import pom.objects.BillingAddress;
@@ -58,5 +59,19 @@ public class MyFirstTestCase extends BaseTest {
         .setBillingAddress(billingAddress)
         .placeOrder();
     Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
+  }
+
+  @Test(dataProvider = "getFeaturedProducts")
+  public void addToCartFeaturedProducts(Product product) throws IOException {
+    CartPage cartPage = new HomePage(getDriver()).
+            load().
+            clickAddToCartBtn(product.getProductName()).
+            clickOnViewCart();
+    Assert.assertEquals(cartPage.getProductName(), product.getProductName());
+  }
+
+  @DataProvider(name = "getFeaturedProducts")
+  protected Object[] getFeaturedProducts() throws IOException {
+    return JacksonDataBind.deserializeJSON("products.json", Product[].class);
   }
 }

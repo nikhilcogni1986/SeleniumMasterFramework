@@ -12,6 +12,7 @@ public class HomePage extends BasePage
     protected WebDriver driver;
 
     private final By lnkStoreMenu = By.cssSelector("#menu-item-1227  a");
+    private final By btnViewCart = By.cssSelector("a[title='View cart']");
 
     public HomePage(WebDriver driver)
     {
@@ -28,5 +29,23 @@ public class HomePage extends BasePage
     public HomePage load() throws IOException {
         load("/");
         return this;
+    }
+
+    public StorePage clickAddToCartBtn(String productName)
+    {
+        By btnAddToCart = getAddToCartBtn(productName);
+        wait.until(ExpectedConditions.elementToBeClickable(btnAddToCart)).click();
+        return new StorePage(driver);
+    }
+
+    private By getAddToCartBtn(String productName)
+    {
+        return By.cssSelector("a[aria-label='Add “"+productName+"” to your cart']");
+    }
+
+    public CartPage clickOnViewCart()
+    {
+        wait.until(ExpectedConditions.elementToBeClickable(btnViewCart)).click();
+        return new CartPage(driver);
     }
 }
